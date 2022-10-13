@@ -28,13 +28,13 @@ public class DataService implements IDataService {
 
     private final RestTemplate restTemplate;
     private final OrderMessagingService messagingService;
-    private final ExecutorService executorService;
+    private ExecutorService executorService;
 
     @Value("${db.address}")
     private String address;
 
     @Value("${db.ports}")
-    List<Integer> ports;
+    private List<Integer> ports;
 
     @Autowired
     public DataService(RestTemplate restTemplate, OrderMessagingService messagingService, ExecutorService executorService) {
@@ -54,7 +54,11 @@ public class DataService implements IDataService {
         List<Future<Info>> requests = new ArrayList<>();
         List<Info> results = new ArrayList<>();
         for (int i = 0; i < ports.size(); i++) {
-            requests.add(executorService.submit(new RequestInfo(getAddress(id, ports.get(i)), restTemplate)));
+            int port = ports.get(i);
+            RequestInfo requestInfo = new RequestInfo(getAddress(id, port), restTemplate);
+            Future<Info> future = executorService.submit(requestInfo);
+            requests.add(future);
+//            requests.add(executorService.submit(new RequestInfo(getAddress(id, ports.get(i)), restTemplate)));
         }
         try {
             for (int i = 0; i < requests.size(); i++) {
@@ -87,7 +91,7 @@ public class DataService implements IDataService {
         }
     }
 
-    private Info resolveVersionInfo(List<Info> results) {
+    public Info resolveVersionInfo(List<Info> results) {
         Info minChangeDateInfo = null;
         Info maxChangeDateInfo;
 
@@ -118,5 +122,4 @@ public class DataService implements IDataService {
 
         return minChangeDateInfo;
     }
-
 }
