@@ -1,0 +1,34 @@
+version: '3.9'
+services:
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.10-management
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+  proxy:
+    container_name: proxy
+    build:
+      context: proxy
+      dockerfile: Dockerfile
+    image: proxy:latest
+    ports:
+      - "8079:8079"
+    links:
+      - rabbitmq
+  cache1:
+    container_name: cache1
+    build:
+      context: cache
+      dockerfile: Dockerfile1
+    image: cache:latest
+    ports:
+      - "8081:8081"
+  cache2:
+    container_name: cache2
+    build:
+      context: cache
+      dockerfile: Dockerfile2
+    image: cache:latest
+    ports:
+      - "8082:8082"
