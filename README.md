@@ -1,13 +1,13 @@
 # Запуск:
 
 Для работы необходимо запустить rabbitmq
-> 1. docker run -d --hostname my-rabbit --name rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
+> docker run -d --hostname my-rabbit --name rabbit -p 5672:5672 -p 15672:15672 rabbitmq:3-management
 
 ### Запустить proxy
 
 ### Запустить cache. Cache запускается в двух экземплярах. Каждому экземпляру нужно передать при запуске аргумент (VM Options):
-> 2. Для инстанса 1: -Dspring.profiles.active=cache1
-> 3. Для инстанса 2: -Dspring.profiles.active=cache2
+> -. Для инстанса 1: -Dspring.profiles.active=cache1
+> -. Для инстанса 2: -Dspring.profiles.active=cache2
 
 # Описание
 
