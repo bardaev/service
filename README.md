@@ -6,8 +6,9 @@
 ### Запустить proxy
 
 ### Запустить cache. Cache запускается в двух экземплярах. Каждому экземпляру нужно передать при запуске аргумент (VM Options):
-> -. Для инстанса 1: -Dspring.profiles.active=cache1
-> -. Для инстанса 2: -Dspring.profiles.active=cache2
+> - Для инстанса 1: -Dspring.profiles.active=cache1
+> 
+> - Для инстанса 2: -Dspring.profiles.active=cache2
 
 # Описание
 
